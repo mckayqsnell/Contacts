@@ -52,7 +52,7 @@ app.get('/api/contacts', async (req, res) => { //get request to get all contacts
     }
 });
 
-app.delete('/api/contacts/:id', async (req, res) => {
+app.delete('/api/contacts/:id', async (req, res) => { //delete request to delete a contact with a specific id
     try {
       await Contact.deleteOne({
         _id: req.params.id
@@ -64,7 +64,7 @@ app.delete('/api/contacts/:id', async (req, res) => {
     }
 });
 
-app.put('/api/contacts/:id', async (req, res) => {
+app.put('/api/contacts/:id', async (req, res) => { //put request to update a contact with a specific id
     try {
         let contact = await Contact.findOne({
             _id: req.params.id
