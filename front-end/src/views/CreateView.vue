@@ -16,10 +16,6 @@
           <br />
           <button @click ="upload">Create</button> <br />
         </div>
-        
-        <div class = "upload" v-if="addContactSuccessMessage">
-          <h2>Contact for {{addContactSuccessMessage}} created</h2>
-        </div>
         <br />
       </div>
 
@@ -69,7 +65,6 @@ export default {
             contacts: [],
             findContact: null,
             findName: '',
-            addContactSuccessMessage:''
         }
     },
     computed: {
@@ -94,7 +89,6 @@ export default {
         });
         //console.log(response.data)
         this.contacts = response.data;
-        this.addContactSuccessMessage = this.name; //this will display the name of the contact that was created
 
         return true;
       } catch (error) {
