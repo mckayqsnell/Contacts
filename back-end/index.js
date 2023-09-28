@@ -26,7 +26,7 @@ const contactSchema = new mongoose.Schema({
 const Contact = mongoose.model('Contact', contactSchema); //create model
 
 app.post('/api/contacts' , async (req, res) => { //post request to create a new contact
-    const contact = new Contact({
+    const contact = new Contact({ //create a new contact with the data from the request
         name: req.body.name,
         address: req.body.address,
         phone_number: req.body.phone_number,
