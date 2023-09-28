@@ -62,6 +62,7 @@ export default {
   width: 100%;
   background-color:#014a0c;
   color:white;
+  border-radius: 15%;
 }
 
 .contact .info 
