@@ -5,13 +5,12 @@
     <section class="contact-list">
       <div class="contact" v-for="contact in contacts" v-bind:key="contact.id">
         <div class="info">
-          <p>{{ contact.name }}</p>
-          <p>{{ contact.address }}</p>
-          <p>{{ contact.phone_number }}</p>
-          <p>{{ contact.email }}</p>
-          <p>{{ contact.category }}</p>
+          <h2>{{ contact.name }}</h2>
+          <p>Address: {{ contact.address }}</p>
+          <p>Number: {{ contact.phone_number }}</p>
+          <p>Email: {{ contact.email }}</p>
+          <p>Category(relation): {{ contact.category }}</p>
         </div>
-        <button @click="deleteContact(contact)">Delete</button>
       </div>
     </section>
   </div>
@@ -24,6 +23,7 @@ export default {
   data() {
     return {
       contacts: [],
+      findContact: null,
     };
   },
     created() { //this function is called when the component is created and it will call the getContacts function
@@ -60,30 +60,33 @@ export default {
   margin: 0 0 1.5em;
   display: inline-block;
   width: 100%;
+  background-color:#014a0c;
+  color:white;
 }
 
 .contact .info 
 {
   display: inline-block;
   width: 80%;
+  margin: 0 0 0 1.5em;
 }
 
 /* Masonry on large screens */
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 1101px) {
   .contact-list {
     column-count: 4;
   }
 }
 
 /* Masonry on medium-sized screens */
-@media only screen and (max-width: 1023px) and (min-width: 768px) {
+@media only screen and (max-width: 1100px) and (min-width: 991) {
   .contact-list {
     column-count: 3;
   }
 }
 
 /* Masonry on small screens */
-@media only screen and (max-width: 767px) and (min-width: 540px) {
+@media only screen and (max-width: 990px) and (min-width: 725px) {
   .contact-list {
     column-count: 2;
   }

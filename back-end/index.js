@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //MongoDB connection using mongoose
 const mongoose = require('mongoose'); //import mongoose
 
+//Fully aware this is not secure but I'm not worried about it for this project, github even has a warning about it
 mongoose.connect('mongodb+srv://mckayqsnell:frisbee02@contacts.cnscheb.mongodb.net/?retryWrites=true&w=majority', {
     useNewUrlParser: true, //these are just options to get rid of deprecation warnings
 });

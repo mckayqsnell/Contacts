@@ -17,14 +17,14 @@
           <button @click ="upload">Create</button> <br />
         </div>
         
-        <div class = "upload" v-if="addContact">
-          <h2>Contact for {{addContact.name}} created</h2>
+        <div class = "upload" v-if="addContactSuccessMessage">
+          <h2>Contact for {{addContactSuccessMessage}} created</h2>
         </div>
         <br />
       </div>
 
       <div class = "edit">
-        <h1> Edit a Contact</h1>
+        <h1> Edit/Delete a Contact</h1>
         <div class = "form">
           <input v-model ="findName" placeholder = "Search by Name">
           <div class = "suggestions" v-if="suggestions.length > 0 ">
@@ -69,6 +69,7 @@ export default {
             contacts: [],
             findContact: null,
             findName: '',
+            addContactSuccessMessage:''
         }
     },
     computed: {
@@ -78,72 +79,72 @@ export default {
         return contacts.sort((a,b) => a.name > b.name); //sorts the contacts by name in alphabetical order
       }
     },
-    created() { //this function is called when the component is created and it will call the getContacts function
+    created() { //this method is called when the component is created and it will call the getContacts method
       this.getContacts();
     },
   methods: {
-        toggleForm() {
-            this.creating = !this.creating;
-        },
-        async upload() {
-          try {
-            let response = await axios.post("/api/contacts", {
-              name: this.name,
-              address: this.address,
-              phone_number: this.phone_number,
-              email: this.email,
-              category: this.category
-            });
-            this.contacts = response.data;
-            return true; //what does this do? 
-          } catch (error) {
-            console.log(error); //watch out for this
-          }
-        },
-        async getContacts() {
-          try {
-            let response = await axios.get("/api/contacts"); //axios.get is a function that will make a get request to the server
-            this.contacts = response.data;
-            return true; //what does this do?
-          } catch (error) {
-            console.log(error); //watch out for this
-          }
-        },
-        selectContact(contact) {
-          this.findName = '';
-          this.findContact = contact;
-        },
-        async deleteContact(contact) {
-          try {
-            await axios.delete("/api/contacts/" + contact._id);
-            this.findContact = null;
-            this.getContacts();
-            return true;
-          }
-          catch (error) {
-            console.log(error); //watch out for this
-          }
-        },
-        async editItem(contact)
-        {
-          try 
-          {
-            await axios.put("/api/contacts/" + contact._id, {
-              name: this.findContact.name,
-              address: this.findContact.address,
-              phone_number: this.findContact.phone_number,
-              email: this.findContact.email,
-              category: this.findContact.category
-            });
-            this.findContact = null;
-            this.getContacts();
-            return true;
-          }
-          catch (error) {
-            console.log(error); //watch out for this
-          }
-        }
+    async upload() {
+      try {
+        let response = await axios.post("/api/contacts", {
+          name: this.name,
+          address: this.address,
+          phone_number: this.phone_number,
+          email: this.email,
+          category: this.category
+        });
+        //console.log(response.data)
+        this.contacts = response.data;
+        this.addContactSuccessMessage = this.name; //this will display the name of the contact that was created
+
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getContacts() {
+      try {
+        let response = await axios.get("/api/contacts"); //axios.get is a function that will make a get request to the server
+        //console.log(Array.isArray(response.data));
+        //console.log(response.data);
+        this.contacts = response.data;
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    selectContact(contact) {
+      this.findName = '';
+      this.findContact = contact;
+    },
+    async deleteContact(contact) {
+      try {
+        await axios.delete("/api/contacts/" + contact._id);
+        this.findContact = null;
+        this.getContacts();
+        return true;
+      }
+      catch (error) {
+        console.log(error);
+      }
+    },
+    async editContact(contact) {
+      try {
+        await axios.put("/api/contacts/" + contact._id, {
+          name: this.findContact.name,
+          address: this.findContact.address,
+          phone_number: this.findContact.phone_number,
+          email: this.findContact.email,
+          category: this.findContact.category
+        });
+        this.findContact = null;
+        this.getContacts();
+        return true;
+      }
+      catch (error) {
+        console.log(error);
+      }
     }
+  }
 }
 </script>
 
@@ -157,6 +158,12 @@ input {
 button {
   margin-top: 20px;
   font-size: 1.2em;
+}
+
+/* upload */
+
+.upload h2 {
+  margin: 0;
 }
 
 /* Suggestions for editing */
